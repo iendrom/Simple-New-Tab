@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .container:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+        .time {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        .search-bar input:focus {
+            outline: none;
+            border-color: #3f51b5;
+            box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.4);
+        }
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .links a {
+            text-decoration: none;
+            color: #3f51b5;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .links a:hover {
+            color: #bb86fc;
+        }
+        .widget {
+            margin-top: 20px;
+        }
+        .todo-list {
+            text-align: left;
+        }
+        .todo-list input {
+            flex: 1;
+            padding: 5px 10px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+        }
+        .todo-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .todo-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 10px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #2c2c2c;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+        .todo-list li:hover {
+            background-color: #3c3c3c;
+        }
+        .todo-list li button {
+            background: none;
+            border: none;
+            color: #ff5252;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .todo-list li button:hover {
+            color: #ff7f7f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="time" id="time"></div>
+        <div class="search-bar">
+            <input type="text" id="searchDuckDuckGo" placeholder="Search DuckDuckGo" aria-label="Search DuckDuckGo" onkeydown="if(event.key === 'Enter') {searchDuckDuckGo();}">
+        </div>
+        <div class="search-bar">
+            <input type="text" id="searchGoogle" placeholder="Search Google" aria-label="Search Google" onkeydown="if(event.key === 'Enter') {searchGoogle();}">
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search4get" placeholder="Search 4get.ca" aria-label="Search 4get.ca" onkeydown="if(event.key === 'Enter') {search4get();}">
+        </div>
+        <div class="search-bar">
+            <input type="text" id="searchPrivau" placeholder="Search Priv.au" aria-label="Search Priv.au" onkeydown="if(event.key === 'Enter') {searchPrivau();}">
+        </div>
+        <div class="links">
+            <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Google</a>
+            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a>
+            <a href="https://www.github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        <div class="widget todo-list">
+            <input type="text" id="todoInput" placeholder="Add a to-do" aria-label="Add a to-do" onkeydown="if(event.key === 'Enter') {addTodo();}">
+            <ul id="todoList"></ul>
+        </div>
+    </div>
+
+    <script>
+        function searchDuckDuckGo() {
+            const query = document.getElementById('searchDuckDuckGo').value;
+            window.open('https://duckduckgo.com/?q=' + query, '_blank');
+        }
+
+        function searchGoogle() {
+            const query = document.getElementById('searchGoogle').value;
+            window.open('https://www.google.com/search?q=' + query, '_blank');
+        }
+
+        function search4get() {
+            const query = document.getElementById('search4get').value;
+            window.open('https://4get.ca/web?s=' + query, '_blank');
+        }
+
+        function searchPrivau() {
+            const query = document.getElementById('searchPrivau').value;
+            window.open('https://priv.au/search?q=' + query, '_blank');
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('time').textContent = timeString;
+        }
+
+        function addTodo() {
+            const todoInput = document.getElementById('todoInput');
+            const todoText = todoInput.value.trim();
+            if (todoText !== "") {
+                const todoList = document.getElementById('todoList');
+                const listItem = document.createElement('li');
+                listItem.textContent = todoText;
+                
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'X';
+                removeButton.onclick = () => {
+                    listItem.remove();
+                };
+                listItem.appendChild(removeButton);
+
+                todoList.appendChild(listItem);
+                todoInput.value = "";
+            }
+        }
+
+        updateTime();
+        setInterval(updateTime, 60000);
+    </script>
+</body>
+</html>
